@@ -25,7 +25,7 @@ def findSub(f,match):
     except:
         print(match)
         return None
-def main():
+def get_data():
     f = urlopen('https://app.testudo.umd.edu/soc/search?courseId=&sectionId=&termId=201808&_openSectionsOnly=on&creditCompare=&credits=&courseLevelFilter=ALL&instructor=&_facetoface=on&_blended=on&_online=on&courseStartCompare=&courseStartHour=&courseStartMin=&courseStartAM=&courseEndHour=&courseEndMin=&courseEndAM=&teachingCenter=ALL&_classDay1=on&_classDay2=on&_classDay3=on&_classDay4=on&_classDay5=on')
     #print(f.read())
     html = f.read().decode('utf-8')
@@ -34,5 +34,5 @@ def main():
     return Parallel(n_jobs=32,backend="threading")(delayed(findSub)(f,match[i]) for i in range(len(match)))
 	
 start = time.time()
-res = main()
+#res = getData()
 print(time.time()-start)
