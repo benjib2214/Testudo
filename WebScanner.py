@@ -21,7 +21,7 @@ def findSub(f,match):
         for cl in classes:
             classHtml.append(urlopen(subUrl+'/'+cl[0:7]).read().decode('utf-8'))	
         print('done ', match)
-        return match,classHtml
+        return classHtml
     except:
         print(match)
         return None
