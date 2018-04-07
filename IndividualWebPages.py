@@ -9,22 +9,15 @@ from WebScanner import getData
 from bs4 import BeautifulSoup
 import urllib
 import time
+from joblib import Parallel, delayed
+from dataframe import AllCourse
 
-start = time.time()
-htmls = getData()
-end = time.time()
-print (end - start)
-
-#url = "https://app.testudo.umd.edu/soc/search?courseId=enes100&sectionId=&termId=201808&_openSectionsOnly=on&creditCompare=&credits=&courseLevelFilter=ALL&instructor=&_facetoface=on&_blended=on&_online=on&courseStartCompare=&courseStartHour=&courseStartMin=&courseStartAM=&courseEndHour=&courseEndMin=&courseEndAM=&teachingCenter=ALL&_classDay1=on&_classDay2=on&_classDay3=on&_classDay4=on&_classDay5=on"
-
-#f = urllib.request.urlopen(url)
-#fp = f.read().strip()
-#print (fp)
-for row in range(len(htmls)):
-    if htmls[row] == None: 
-        continue
-    for col in range(len(htmls[row])):
-        soup = BeautifulSoup(htmls[row][col], "html.parser")
+def extractHTMLData(htmls,classes):
+    if htmls == None: 
+        return None
+    returnInfo = []
+    for col in range(len(htmls)):
+        soup = BeautifulSoup(htmls[col], "html.parser")
         
         
         #print(courseNums)
@@ -57,13 +50,32 @@ for row in range(len(htmls)):
             #print (course)
             openseats = soup.find_all('span', class_ = "open-seats-count")[i].get_text()
             totalseats = soup.find_all('span', class_ = "total-seats-count")[i].get_text()
+            returnInfo.append((course,sections,None,professors,openseats,totalseats,None))
             #print (totalseats, openseats)
             #building = soup.find_all('span', class_ = "building-code")[i].get_text()
             #classroom = soup.find_all('span', class_ = "class-room")[i].get_text()
             #location = building + " " + classroom
             #print (location)
             #print ("\n")
+    return returnInfo
+start = time.time()
+htmls = getData()
+end = time.time()
+print (end - start)
 
+#url = "https://app.testudo.umd.edu/soc/search?courseId=enes100&sectionId=&termId=201808&_openSectionsOnly=on&creditCompare=&credits=&courseLevelFilter=ALL&instructor=&_facetoface=on&_blended=on&_online=on&courseStartCompare=&courseStartHour=&courseStartMin=&courseStartAM=&courseEndHour=&courseEndMin=&courseEndAM=&teachingCenter=ALL&_classDay1=on&_classDay2=on&_classDay3=on&_classDay4=on&_classDay5=on"
+
+#f = urllib.request.urlopen(url)
+#fp = f.read().strip()
+#print (fp)  
+classes = AllCourse()
+information = Parallel(n_jobs=20)(delayed(extractHTMLData)(htmls[row],classes) for row in range(len(htmls)))
+for i in range(len(information)):
+    if information[i] == None:
+        continue
+    for j in range(len(information[i])):
+        classes.addSectionInfo(information[i][j][0],information[i][j][1],information[i][j][2],information[i][j][3],information[i][j][4],information[i][j][5],information[i][j][6])
+classes.printAllCourseInformation()
 print ("Finished")
 end2 = time.time()
 print (end2 - end)
