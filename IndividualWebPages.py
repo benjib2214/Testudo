@@ -8,8 +8,12 @@ Created on Fri Apr  6 21:22:39 2018
 from WebScanner import getData
 from bs4 import BeautifulSoup
 import urllib
+import time
 
+start = time.time()
 htmls = getData()
+end = time.time()
+print (end - start)
 
 #url = "https://app.testudo.umd.edu/soc/search?courseId=enes100&sectionId=&termId=201808&_openSectionsOnly=on&creditCompare=&credits=&courseLevelFilter=ALL&instructor=&_facetoface=on&_blended=on&_online=on&courseStartCompare=&courseStartHour=&courseStartMin=&courseStartAM=&courseEndHour=&courseEndMin=&courseEndAM=&teachingCenter=ALL&_classDay1=on&_classDay2=on&_classDay3=on&_classDay4=on&_classDay5=on"
 
@@ -61,6 +65,8 @@ for row in range(len(htmls)):
             print ("\n")
 
 print ("Finished")
+end2 = time.time()
+print (end2 - end)
 #print (classes)
 
 
