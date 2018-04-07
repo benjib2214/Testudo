@@ -17,6 +17,8 @@ htmls = getData()
 #fp = f.read().strip()
 #print (fp)
 for row in range(len(htmls)):
+    if htmls[row] == None: 
+        continue
     for col in range(len(htmls[row])):
         soup = BeautifulSoup(htmls[row][col], "html.parser")
         
