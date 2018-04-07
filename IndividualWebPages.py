@@ -36,9 +36,9 @@ for row in range(len(htmls)):
         maxim = 0
         for i in range(len(soup.find_all('span', class_ = "section-id"))):
             professors = soup.find_all('span', class_ = "section-instructor")[i].get_text()
-            print(professors)
+            #print(professors)
             sections = soup.find_all('span', class_ = "section-id")[i].get_text().strip()
-            print(sections)
+            #print(sections)
             try:
                 if int(sections) > maxim:
                     pass
@@ -54,15 +54,15 @@ for row in range(len(htmls)):
             #endtime = soup.find_all('span', class_ = "class-end-time")[i].get_text()
             #times = days + " " + starttime + " - " + endtime
             #print (times)
-            print (course)
+            #print (course)
             openseats = soup.find_all('span', class_ = "open-seats-count")[i].get_text()
             totalseats = soup.find_all('span', class_ = "total-seats-count")[i].get_text()
-            print (totalseats, openseats)
+            #print (totalseats, openseats)
             #building = soup.find_all('span', class_ = "building-code")[i].get_text()
             #classroom = soup.find_all('span', class_ = "class-room")[i].get_text()
             #location = building + " " + classroom
             #print (location)
-            print ("\n")
+            #print ("\n")
 
 print ("Finished")
 end2 = time.time()
