@@ -5,28 +5,18 @@ Created on Fri Apr  6 21:22:39 2018
 @author: Alexander Davydov
 """
 
+from WebScanner import getData
 from bs4 import BeautifulSoup
 import urllib
 
-def findAll(string,keyword):
-#    print('find k word')
-    numKeyWord=string.count(keyword,0,len(string))
-    startIndexes = [None]*numKeyWord
-    i=0
-    while i<numKeyWord:
-        if i==0:
-            startIndexes[i]=string.find(keyword)
-        else:
-            startIndexes[i]=string.find(keyword,startIndexes[i-1]+len(keyword)+1)
-        i+=1
-    return startIndexes
+htmls = getData()
 
-url = "https://app.testudo.umd.edu/soc/search?courseId=enes100&sectionId=&termId=201808&_openSectionsOnly=on&creditCompare=&credits=&courseLevelFilter=ALL&instructor=&_facetoface=on&_blended=on&_online=on&courseStartCompare=&courseStartHour=&courseStartMin=&courseStartAM=&courseEndHour=&courseEndMin=&courseEndAM=&teachingCenter=ALL&_classDay1=on&_classDay2=on&_classDay3=on&_classDay4=on&_classDay5=on"
+#url = "https://app.testudo.umd.edu/soc/search?courseId=enes100&sectionId=&termId=201808&_openSectionsOnly=on&creditCompare=&credits=&courseLevelFilter=ALL&instructor=&_facetoface=on&_blended=on&_online=on&courseStartCompare=&courseStartHour=&courseStartMin=&courseStartAM=&courseEndHour=&courseEndMin=&courseEndAM=&teachingCenter=ALL&_classDay1=on&_classDay2=on&_classDay3=on&_classDay4=on&_classDay5=on"
 
-f = urllib.request.urlopen(url)
-fp = f.read().strip()
+#f = urllib.request.urlopen(url)
+#fp = f.read().strip()
 #print (fp)
-soup = BeautifulSoup(fp, "html.parser")
+soup = BeautifulSoup(htmls[0][0], "html.parser")
 
 
 #print(courseNums)
