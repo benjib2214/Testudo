@@ -1,6 +1,7 @@
 import time as tm
 import pickle
 import matplotlib.pyplot as plot
+"""Top level object that contains a dictionary of every course code maped to a corosponding Course object"""
 class AllCourse:
     def __init__(self):
         self.dictionary = {}
@@ -35,6 +36,8 @@ class AllCourse:
         plot.xlabel('Days Elapsed')
         plot.title(courseCode+' '+section)
         plot.show()
+"""Stores all of the information for a specific course code.  This includes information on all sections
+and data on how they changed over time"""
 class Course:
     def __init__(self, courseCode):
         self.courseCode = courseCode
@@ -50,7 +53,7 @@ class Course:
             print(key)
             for i in range(len(value)):
                 print(value[i].toString())
-
+"""Stores one day's worth of information for a particular course section"""
 class DailyCourseInfo():
     def __init__(self, room, professor, seatsFree, seatsTotal, time):
         self.room = room
@@ -58,17 +61,22 @@ class DailyCourseInfo():
         self.seatsFree = seatsFree
         self.seatsTotal = seatsTotal
         self.time = time
+    """toString method for the DailyCourseInfo object"""    
     def toString(self):
         return [str(self.room),str(self.professor),str(self.seatsFree),str(self.seatsTotal),str(self.time)]
+"""Stores the dictionary of an AllCourse object in a binary file using pickle"""
 def pickleAllCourse(allCourse):
     binary_file = open('stored_all_classes.bin','wb')
     pickledObject = pickle.dump(allCourse.dictionary,binary_file)
     binary_file.close()
+"""loads the stored binary file and returns the dictionary to be assigned to the dictionary
+of an AllCourse object"""     
 def loadAllCourse():
     binary_file = open('stored_all_classes.bin','rb')
     returns = pickle.load(binary_file)
     binary_file.close()
     return returns 
+"""testing method for ensuring functionality"""
 def main():
     courses = AllCourse()
     courses.addSectionInfo("ENEE350","0101","Kim 1200","Baru","20","20","MW 2:00-3:15")
@@ -84,4 +92,4 @@ def main():
     courses.printAllCourseInformation()
     print(courses.getSectionInfo("ENEE350","0101",1))
     courses.generateLineGraph("ENEE350","0101")
-main()
+#main()
