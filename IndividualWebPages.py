@@ -7,7 +7,6 @@ Created on Fri Apr  6 21:22:39 2018
 
 from WebScanner import getData
 from bs4 import BeautifulSoup
-import urllib
 import time
 from joblib import Parallel, delayed
 from dataframe import AllCourse
@@ -20,7 +19,6 @@ def extractHTMLData(htmls,classes):
         soup = BeautifulSoup(htmls[col], "html.parser")
         
         
-        #print(courseNums)
         courses = []
         courseName = soup.find_all('span', class_ = "course-title")[0].get_text()
         for course in soup.find_all('div', class_ = "course-id"):
@@ -63,11 +61,7 @@ htmls = getData()
 end = time.time()
 print (end - start)
 
-#url = "https://app.testudo.umd.edu/soc/search?courseId=enes100&sectionId=&termId=201808&_openSectionsOnly=on&creditCompare=&credits=&courseLevelFilter=ALL&instructor=&_facetoface=on&_blended=on&_online=on&courseStartCompare=&courseStartHour=&courseStartMin=&courseStartAM=&courseEndHour=&courseEndMin=&courseEndAM=&teachingCenter=ALL&_classDay1=on&_classDay2=on&_classDay3=on&_classDay4=on&_classDay5=on"
 
-#f = urllib.request.urlopen(url)
-#fp = f.read().strip()
-#print (fp)  
 classes = AllCourse()
 information = Parallel(n_jobs=20)(delayed(extractHTMLData)(htmls[row],classes) for row in range(len(htmls)))
 for i in range(len(information)):
